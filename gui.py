@@ -131,13 +131,13 @@ class Window():
         label.grid(row=25)
         label = tk.Label(text="" , master=self.memframe, font=30, border=1)
         label.grid(row=26)
-        label= tk.Label(text="Address Value", master=frame2,font=30,border=1)
+        label= tk.Label(text="Address Value(in hex)", master=frame2,font=30,border=1)
         label.grid(row=27,column=0)
         entry=tk.Entry(frame2,font=30,border=1)
         entry.grid(row=28)
         def getaddr():
             address=entry.get()
-            self.memshow(address)
+            self.memshow(address[2:])
             entry.delete(0,tk.END)
 
             return address
