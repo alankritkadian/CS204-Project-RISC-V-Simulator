@@ -19,11 +19,11 @@ class Window():
         self.buttonframe = frame0
         step = tk.Button(frame0, text="Step", font=30, border=4,command=self.step)
         step.grid(row=0, column=1)
-        run = tk.Button(frame0, text="Run", font=30, border=4)
+        run = tk.Button(frame0, text="Run", font=30, border=4,command=self.run)
         run.grid(row=0, column=2)
         run = tk.Button(frame0, text="Dump", font=30, border=4)
         run.grid(row=0, column=3)
-        run = tk.Button(frame0, text="Reset", font=30, border=4)
+        run = tk.Button(frame0, text="Reset", font=30, border=4,command=self.reset)
         run.grid(row=0, column=4)
 
     def pushinstructions(self):
@@ -131,13 +131,13 @@ class Window():
         label.grid(row=25)
         label = tk.Label(text="" , master=self.memframe, font=30, border=1)
         label.grid(row=26)
-        label= tk.Label(text="Address Value", master=frame2,font=30,border=1)
+        label= tk.Label(text="Address Value(in hex)", master=frame2,font=30,border=1)
         label.grid(row=27,column=0)
         entry=tk.Entry(frame2,font=30,border=1)
         entry.grid(row=28)
         def getaddr():
             address=entry.get()
-            self.memshow(address)
+            self.memshow(address[2:])
             entry.delete(0,tk.END)
 
             return address
@@ -214,3 +214,12 @@ class Window():
     def run(self):
         self.processor.run()
         self.RFupdate(self.processor.RF.readfile())
+    def reset(self):
+        self.processor=Processor("C:\\Users\Lenovo\Desktop\CS204-Project\CS204-Project\data.mc")
+        self.window = customtkinter.CTk()
+        self.window.title("RISC-V Simulator")
+        self.CreateButtons()
+        self.pushinstructions()
+        self.Memory()
+        self.RF()
+        self.Display()
