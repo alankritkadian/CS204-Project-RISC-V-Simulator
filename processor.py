@@ -36,3 +36,23 @@ class Processor:
         self.control=Control(self.currInst)
         self.inst_array=[]
         self.load_from_file(filePath)
+
+    def load_from_file(self,filePath):
+        file=open(filePath,"r")
+        instructions=[]
+        for temp in file:
+            self.inst_array.append(temp)
+            instructions.append(temp.split()[1])
+        file.close()
+        for i in range(0,len(instructions)):
+            print(int(instructions[i],16))
+            self.memory.write_word(32*i,int2ba(int(instructions[i],16),length = 32,signed=False))
+    
+    def return_inst(self):
+        print(self.inst_array)
+        return self.inst_array
+
+    def fetch(self):
+        self.currInst.Inst=ba2int(self.memory.load_word(self.PC),signed=False) # currinst stores current instruction
+        print("Instruction Fetched:- ",self.currInst.Inst)
+        return self.currInst.Inst
