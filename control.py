@@ -116,3 +116,21 @@ class Control:
             self.BranchTargetSelect = 1 #immJ
         else:
             self.BranchTargetSelect = 0 #immB
+ 
+    def ResultSelect_gen(self):
+        if self.type == "R": 
+            self.ResultSelect = 0 #AluResult
+        elif self.type == "I" and self.Env.opcode==19:
+            self.ResultSelect = 0 #AluResult
+        elif self.type == "I" and self.Env.opcode==3:
+            self.ResultSelect = 1 #LoadData
+        elif self.type == "J":
+            self.ResultSelect = 2 #PC+4
+        elif self.type == "I" and self.Env.opcode==103:
+            self.ResultSelect = 2 #PC+4
+        elif self.type == "U" and self.Env.opcode==55:
+            self.ResultSelect = 3 #ImmU
+        elif self.type == "U" and self.Env.opcode==23:
+            self.ResultSelect = 4 #ImmU+PC
+        else:
+            self.ResultSelect = 5 #No WriteBack required
