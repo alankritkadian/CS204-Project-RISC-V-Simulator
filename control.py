@@ -110,3 +110,9 @@ class Control:
                 self.ALUOp = "jal"                      
             else:
                 self.ALUOp="error"
+    
+    def BranchTargetSelect_gen(self):
+        if self.type == "J":
+            self.BranchTargetSelect = 1 #immJ
+        else:
+            self.BranchTargetSelect = 0 #immB
