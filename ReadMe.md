@@ -69,11 +69,11 @@ ALU does its calculation and is used to determine the value of muxselect of the 
 - Memory Access,
 Memory is written or accessed according to the type of instruction.
 
-- Write Back, in the write back stage we are writing the value in rd.
+- Write Back, in the write back stage we are writing the value in destination register.
 
 ## Authors
 
 - [@Aditya Patil](https://www.github.com/Nerditya)
 - [@Alankrit Kadian](https://www.github.com/alankritkadian)
 - [@Prashant Singh](https://www.github.com/prashant531)
-- [@Nakul Alawadhi](https://www.github.com/nakul_NRA)
+- [@Nakul Alawadhi](https://www.github.com/nakul-NRA)
