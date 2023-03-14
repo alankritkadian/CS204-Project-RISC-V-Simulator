@@ -176,3 +176,10 @@ class Processor:
 
     def return_RF(self):
         return self.RF.readfile()
+    
+    def run(self):
+        self.PC=0
+        while 1:
+            if self.step()==0:
+                break
+        # print(self.RF.readfile())
