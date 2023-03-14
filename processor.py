@@ -70,6 +70,8 @@ class Processor:
 
         imm = temp[0:12]
         self.currInst.imm=ba2int(imm,signed=True)
+        print("imm:-",imm)
+        print("imm:-",self.currInst.imm)
 
         immS = temp[0:7]
         immS += temp[20:25]
@@ -95,7 +97,7 @@ class Processor:
         immJ.append(temp[11])
         immJ+=temp[1:11]
         immJ.append(0)
-        self.currInst.immJ+= ba2int(immJ,signed=True)
+        self.currInst.immJ = ba2int(immJ,signed=True)
 
         self.currInst.op1=self.RF.read(self.currInst.rs1)
         self.currInst.op2=self.RF.read(self.currInst.rs2)
@@ -168,9 +170,10 @@ class Processor:
         elif self.control.isBranch==1:
             self.PC=self.currInst.BranchTargetAddress
         else:
-            self.PC+=self.ALUResult
+            self.PC=self.ALUResult
 
-        # print("PC:-",self.PC)
+        print("PC:-",self.PC)
+
     def memory_return(self):
         return self.memory.mem
 

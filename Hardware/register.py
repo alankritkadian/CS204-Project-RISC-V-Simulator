@@ -8,6 +8,7 @@ class RF():
 
     def write(self,i,val):
         self.rf[i]=val
+        self.rf[0]=0
 
     def read(self,i):
         return self.rf[i]

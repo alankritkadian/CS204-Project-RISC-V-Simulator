@@ -9,7 +9,7 @@ customtkinter.set_default_color_theme("blue")
 
 class Window():
     def __init__(self):
-        self.processor=Processor("C:\\Users\Lenovo\Desktop\CS204-Project\CS204-Project\data.mc")
+        self.processor=Processor("BubbleSort.mc")
         self.window = customtkinter.CTk()
         self.window.title("RISC-V Simulator")
 
@@ -207,9 +207,8 @@ class Window():
         x = self.processor.PC//32
         self.processor.step()
         self.RFupdate(self.processor.RF.readfile())
-        # self.instupdate((self.processor.PC)/32)
-        # self.memupdate(self.processor.memory)
         self.instlabels[x].config(bg="white")
+        print(self.processor.PC//32)
         self.instlabels[(self.processor.PC)//32].config(bg="lightblue")
 
     def run(self):
