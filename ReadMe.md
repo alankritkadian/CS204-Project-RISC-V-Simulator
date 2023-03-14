@@ -40,7 +40,7 @@ Install dependencies
 
 ```bash
   pip install customtkinter
-  pip install bitarray
+  pip install bitarrayDe
 ```
 
 Run the project
@@ -48,3 +48,26 @@ Run the project
 ```bash
   python main.py
 ```
+
+
+###Images
+
+Image:
+GUI Window 
+![](static/image.png)
+
+----
+###Project Description
+
+- We have implemented a RISC-V single cycle processor.
+- We have used many object oriented programming concepts and implemented a processor with alu , control unit and memory mocking the working of of a processor in exact same way which makes our code much more readable and intuitive. All of this combined with a gui.
+-First we created a window gui with help of tkinter and linked the button commands to that of the processor.
+-FETCH, we have a method of processor object fetch, it fetches the instruction from the data.mc file
+-DECODE, a object of Instruction is created and we get access to all attributes of Instructions.
+-EXECUTE,
+ALU does its calculation and is used to determine the value of muxselect of the mux deciding PC, and the data is made available to memory.
+
+-Memory Access,
+Memory is written or accessed according to the type of instruction.
+
+-Write Back, in the write back stage we are writing the value in rd.
