@@ -138,3 +138,36 @@ class Processor:
             self.currInst.LoadData=ba2int(self.memory.load_halfword(self.ALUResult),signed=True)
         elif self.control.ALUOp=="lw":
             self.currInst.LoadData=ba2int(self.memory.load_word(self.ALUResult),signed=True)
+
+    def write_back(self):
+        self.control.ResultSelect_gen()
+        temp=self.control.ResultSelect
+        #Write Back in Rd
+        if temp==0:
+            self.RF.write(self.currInst.rd,self.ALUResult)
+        elif temp==1:
+            self.RF.write(self.currInst.rd,self.currInst.LoadData)
+        elif temp==2:
+            self.RF.write(self.currInst.rd,self.PC+32)
+        elif temp==3:
+            self.RF.write(self.currInst.rd,self.currInst.immU)
+        elif temp==4:
+            self.RF.write(self.currInst.rd,self.currInst.immU*8+self.PC)
+
+        #Updating Branch Target Address
+        if self.control.BranchTargetSelect==0:
+            self.currInst.BranchTargetAddress=self.currInst.immB*8+self.PC
+        else:
+            self.currInst.BranchTargetAddress=self.currInst.immJ*8+self.PC
+
+        self.control.isBranch_gen(self.ALUResult)
+        print("isBranch:-",self.control.isBranch) 
+        #Update PC
+        if self.control.isBranch==0:
+            self.PC+=32            
+        elif self.control.isBranch==1:
+            self.PC=self.currInst.BranchTargetAddress
+        else:
+            self.PC+=self.ALUResult
+
+        # print("PC:-",self.PC)
