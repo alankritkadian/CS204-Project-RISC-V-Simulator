@@ -22,18 +22,28 @@ J format - jal
 ```
 
 
-## Dependencies
+## Run Locally
 
-Needs python3 installed and thefollowing libraries
+Clone the project
 
 ```bash
-  pip install bitarray
-  pip install customtkinter
+  git clone https://github.com/alankritkadian/CS204-Project-RISC-V-Simulator
 ```
 
-## Deployment
+Go to the project directory
 
-To use this project run
+```bash
+  cd CS204-Project-RISC-V-Simulator/
+```
+
+Install dependencies
+
+```bash
+  pip install customtkinter
+  pip install bitarray
+```
+
+Run the project
 
 ```bash
   python main.py
