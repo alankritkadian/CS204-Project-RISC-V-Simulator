@@ -121,3 +121,20 @@ class Processor:
         self.ALUResult=self.ALU.execute()
         self.control.BranchTargetSelect_gen()
         print("Intruction Type:- ",self.control.type,"ALUResult:- ",self.ALUResult, "ImmB:- ", self.currInst.immB)
+
+    def memory_access(self):
+        if self.control.ALUOp=="sb":
+            s = int2ba(self.currInst.op2,length=32,signed=True)
+            self.memory.write_byte(self.ALUResult,s[24:32])
+        elif self.control.ALUOp=="sh":
+            s = int2ba(self.currInst.op2,length=32,signed=True)
+            self.memory.write_halfword(self.ALUResult,s[16:32])
+        elif self.control.ALUOp=="sw":
+            s = int2ba(self.currInst.op2,length=32,signed=True)
+            self.memory.write_word(self.ALUResult,s)
+        elif self.control.ALUOp=="lb":
+            self.currInst.LoadData=ba2int(self.memory.load_byte(self.ALUResult),signed=True)
+        elif self.control.ALUOp=="lh":
+            self.currInst.LoadData=ba2int(self.memory.load_halfword(self.ALUResult),signed=True)
+        elif self.control.ALUOp=="lw":
+            self.currInst.LoadData=ba2int(self.memory.load_word(self.ALUResult),signed=True)
