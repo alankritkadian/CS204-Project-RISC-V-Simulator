@@ -9,7 +9,7 @@ customtkinter.set_default_color_theme("blue")
 
 class Window():
     def __init__(self):
-        self.processor=Processor("BubbleSort.mc")
+        self.processor=Processor("Fibonacci.mc")
         self.window = customtkinter.CTk()
         self.window.title("RISC-V Simulator")
 
@@ -21,7 +21,7 @@ class Window():
         step.grid(row=0, column=1)
         run = tk.Button(frame0, text="Run", font=30, border=4,command=self.run)
         run.grid(row=0, column=2)
-        run = tk.Button(frame0, text="Dump", font=30, border=4)
+        run = tk.Button(frame0, text="Dump", font=30, border=4, command=self.dump)
         run.grid(row=0, column=3)
         run = tk.Button(frame0, text="Reset", font=30, border=4,command=self.reset)
         run.grid(row=0, column=4)
@@ -212,10 +212,16 @@ class Window():
         self.instlabels[(self.processor.PC)//32].config(bg="lightblue")
 
     def run(self):
+        x = self.processor.PC//32
         self.processor.run()
         self.RFupdate(self.processor.RF.readfile())
+        self.instlabels[x].config(bg="white")
+        print(self.processor.PC//32)
+        self.instlabels[(self.processor.PC)//32].config(bg="lightblue")
+    
     def reset(self):
-        self.processor=Processor("C:\\Users\Lenovo\Desktop\CS204-Project\CS204-Project\data.mc")
+        self.window.destroy()
+        self.processor=Processor("Fibonacci.mc")
         self.window = customtkinter.CTk()
         self.window.title("RISC-V Simulator")
         self.CreateButtons()
@@ -223,3 +229,21 @@ class Window():
         self.Memory()
         self.RF()
         self.Display()
+    
+    def dump(self):
+        file = open("dump.txt", "w")
+        adr = 0
+        for i in range(0,134217728) :
+            l1,l2,l3,l4=self.processor.memory.mem[adr:adr+8],self.processor.memory.mem[adr+8:adr+16],self.processor.memory.mem[adr+16:adr+24],self.processor.memory.mem[adr+24:adr+32]
+            l1 = ba2int(l1)
+            l2 = ba2int(l2)
+            l3 = ba2int(l3)
+            l4 = ba2int(l4)
+            l1 = hex(l1)
+            l2 = hex(l2)
+            l3 = hex(l3)
+            l4 = hex(l4)
+            file.write(hex(adr)+" "+l1+" "+l2+" "+l3+" "+l4+"\n")
+            adr+=32
+
+
