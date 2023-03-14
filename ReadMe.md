@@ -56,7 +56,7 @@ GUI Window
 
 ----
 ## Project Description
-```
+
 - We have implemented a RISC-V single cycle processor.
 - We have used many object oriented programming concepts and implemented a processor with alu , control unit and memory mocking the working of of a processor in exact same way which makes our code much more readable and intuitive. All of this combined with a gui.
 
@@ -70,4 +70,3 @@ ALU does its calculation and is used to determine the value of muxselect of the 
 Memory is written or accessed according to the type of instruction.
 
 -Write Back, in the write back stage we are writing the value in rd.
-```
