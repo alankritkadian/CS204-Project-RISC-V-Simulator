@@ -101,3 +101,23 @@ class Processor:
         self.currInst.op2=self.RF.read(self.currInst.rs2)
         self.control.Type_gen()
         #print("Instruction Opcode:- ",self.currInst.opcode)
+
+    def sign_extend(self):
+        if self.currInst.imm>>11==1:
+            self.currInst.imm = self.currInst.imm - 2 ** 12
+        if self.currInst.immB>>12==1:
+            self.currInst.immB=self.currInst.immB - 2 ** 13
+        if self.currInst.immS>>11==1:
+            self.currInst.immS=self.currInst.immS - 2 ** 12
+        if self.currInst.immU>>31==1:
+            self.currInst.immU=self.currInst.immU - 2 ** 32
+        if self.currInst.immJ>>20==1:
+            self.currInst.immJ=self.currInst.immJ - 2 ** 21
+
+    def execute(self):
+        self.control.OP2Select_gen()
+        self.control.ALUOp_gen()
+        self.ALU = ALU(self.currInst,self.control)
+        self.ALUResult=self.ALU.execute()
+        self.control.BranchTargetSelect_gen()
+        print("Intruction Type:- ",self.control.type,"ALUResult:- ",self.ALUResult, "ImmB:- ", self.currInst.immB)
