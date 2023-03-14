@@ -183,3 +183,13 @@ class Processor:
             if self.step()==0:
                 break
         # print(self.RF.readfile())
+        
+    def step(self):
+        x = self.fetch()
+        if x==0: 
+            return 0
+        self.decode()
+        self.execute()
+        self.memory_access()
+        self.write_back()
+        return 1
