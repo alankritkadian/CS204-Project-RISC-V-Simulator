@@ -134,3 +134,13 @@ class Control:
             self.ResultSelect = 4 #ImmU+PC
         else:
             self.ResultSelect = 5 #No WriteBack required
+
+    def isBranch_gen(self,result):
+        if self.type=="B" and result==1:
+            self.isBranch=1
+        elif self.type=="J":
+            self.isBranch=1
+        elif self.ALUOp=="jalr":
+            self.isBranch=2
+        else:
+            self.isBranch=0
