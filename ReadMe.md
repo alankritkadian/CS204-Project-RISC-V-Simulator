@@ -20,4 +20,3 @@ SB format - beq, bne, bge, blt
 U format - auipc, lui
 J format - jal
 ```
-
