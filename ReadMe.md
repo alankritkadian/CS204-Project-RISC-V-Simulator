@@ -20,3 +20,21 @@ SB format - beq, bne, bge, blt
 U format - auipc, lui
 J format - jal
 ```
+
+
+## Dependencies
+
+Needs python3 installed and thefollowing libraries
+
+```bash
+  pip install bitarray
+  pip install customtkinter
+```
+
+## Deployment
+
+To use this project run
+
+```bash
+  python main.py
+```
