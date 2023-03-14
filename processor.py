@@ -171,3 +171,8 @@ class Processor:
             self.PC+=self.ALUResult
 
         # print("PC:-",self.PC)
+    def memory_return(self):
+        return self.memory.mem
+
+    def return_RF(self):
+        return self.RF.readfile()
