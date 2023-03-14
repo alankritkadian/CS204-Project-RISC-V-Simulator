@@ -53,7 +53,8 @@ Run the project
 Image:
 GUI Window
 ![](static/image.png)
-
+----
+![](static/risc-5.png)
 ----
 ## Project Description
 
