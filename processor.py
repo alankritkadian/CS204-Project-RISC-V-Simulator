@@ -45,11 +45,11 @@ class Processor:
             instructions.append(temp.split()[1])
         file.close()
         for i in range(0,len(instructions)):
-            print(int(instructions[i],16))
+            # print(int(instructions[i],16))
             self.memory.write_word(32*i,int2ba(int(instructions[i],16),length = 32,signed=False))
 
     def return_inst(self):
-        print(self.inst_array)
+        # print(self.inst_array)
         return self.inst_array
 
     def fetch(self):
@@ -70,12 +70,12 @@ class Processor:
 
         imm = temp[0:12]
         self.currInst.imm=ba2int(imm,signed=True)
-        print("imm:-",imm)
         print("imm:-",self.currInst.imm)
 
         immS = temp[0:7]
         immS += temp[20:25]
         self.currInst.immS=ba2int(immS,signed=True)
+        print("immS:-",self.currInst.immS)
 
         immB = bitarray(0)
         immB.append(temp[0])
@@ -83,13 +83,13 @@ class Processor:
         immB += temp[1:7]
         immB += temp[20:24]
         immB.append(0)
-        # print("Instruction:-",temp)
-        #print("immB:-",immB)
         self.currInst.immB = ba2int(immB,signed=True)
+        print("immB:-",self.currInst.immB)
 
         immU=temp[0:20]
         immU+=zeros(12)
         self.currInst.immU=ba2int(immU,signed=True)
+        print("immU:-",self.currInst.immU)
 
         immJ=bitarray(0)
         immJ.append(temp[0])
@@ -98,11 +98,12 @@ class Processor:
         immJ+=temp[1:11]
         immJ.append(0)
         self.currInst.immJ = ba2int(immJ,signed=True)
+        print("immJ:-",self.currInst.immJ)
 
         self.currInst.op1=self.RF.read(self.currInst.rs1)
         self.currInst.op2=self.RF.read(self.currInst.rs2)
         self.control.Type_gen()
-        #print("Instruction Opcode:- ",self.currInst.opcode)
+        print("Instruction Opcode:- ",self.currInst.opcode)
 
     def sign_extend(self):
         if self.currInst.imm>>11==1:
@@ -122,24 +123,36 @@ class Processor:
         self.ALU = ALU(self.currInst,self.control)
         self.ALUResult=self.ALU.execute()
         self.control.BranchTargetSelect_gen()
-        print("Intruction Type:- ",self.control.type,"ALUResult:- ",self.ALUResult, "ImmB:- ", self.currInst.immB)
+        print("Intruction Type:- ",self.control.type,"ALUResult:- ",self.ALUResult)
 
     def memory_access(self):
         if self.control.ALUOp=="sb":
             s = int2ba(self.currInst.op2,length=32,signed=True)
             self.memory.write_byte(self.ALUResult,s[24:32])
+            print("Memory Access:- ","sb")
+            print("writeback at ",self.ALUResult,"with data ",s[24:32])
         elif self.control.ALUOp=="sh":
             s = int2ba(self.currInst.op2,length=32,signed=True)
             self.memory.write_halfword(self.ALUResult,s[16:32])
+            print("Memory Access:- ","sh")
+            print("writeback at ",self.ALUResult,"with data ",s[16:32])
         elif self.control.ALUOp=="sw":
             s = int2ba(self.currInst.op2,length=32,signed=True)
             self.memory.write_word(self.ALUResult,s)
+            print("Memory Access:- ","sw")
+            print("writeback at ",self.ALUResult,"with data ",s)
         elif self.control.ALUOp=="lb":
             self.currInst.LoadData=ba2int(self.memory.load_byte(self.ALUResult),signed=True)
+            print("Memory Access:- ","lb")
+            print("load word from ",self.ALUResult,"with data ",self.currInst.LoadData)
         elif self.control.ALUOp=="lh":
             self.currInst.LoadData=ba2int(self.memory.load_halfword(self.ALUResult),signed=True)
+            print("Memory Access:- ","lh")
+            print("load word from ",self.ALUResult,"with data ",self.currInst.LoadData)
         elif self.control.ALUOp=="lw":
             self.currInst.LoadData=ba2int(self.memory.load_word(self.ALUResult),signed=True)
+            print("Memory Access:- ","lw")
+            print("load word from ",self.ALUResult,"with data ",self.currInst.LoadData)
 
     def write_back(self):
         self.control.ResultSelect_gen()
@@ -182,9 +195,13 @@ class Processor:
     
     def run(self):
         self.PC=0
+        self.clock=0
         while 1:
             if self.step()==0:
                 break
+            self.clock+=1
+        
+        print("Clock:-",self.clock)
         # print(self.RF.readfile())
         
     def step(self):
